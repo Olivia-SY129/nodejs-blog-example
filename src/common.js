@@ -1,4 +1,5 @@
-const HOST = 'b0eb064f57d5.ngrok.io'
+const HOST = process.env.HOST
+const PORT = process.env.PORT || 3000
 
 /* eslint-disable prefer-destructuring */
 
@@ -35,6 +36,7 @@ const APP_CONFIG_JSON = JSON.stringify({
 
 module.exports = {
   HOST,
+  PORT,
   FB_APP_ID,
   FB_CLIENT_SECRET,
   NAVER_CLIENT_ID,

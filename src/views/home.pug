@@ -1,4 +1,38 @@
 extends base.pug
 
 block contents
-    a(href="/logout") 로그아웃
+    div.p-8
+        h1.text-2xl.text-center.font-bold 메인 피드
+        a.logout.font-sm.text-gray-600(href="/logout") 로그아웃
+
+        form.mt-16(method='POST' action='/posts')
+            div.text-lg.text-center 
+                span.font-bold #{user.nickname || user.email}
+                span 의
+            h2.text-lg.text-center.mb-2 오늘의 한 마디
+            div.flex.flex-row.justify-center
+                input.rounded.border.border-gray-200.p-2(name='content' placeholder="당신의 생각을 공유해요.")
+                button.rounded.bg-blue-500.p-2.text-white.ml-2 올리기
+
+        div.mt-16.space-y-2
+            each post in posts
+                div.flex.flex-row
+                    div.mr-2
+                        div.post.flex-grow
+                            div.post-content.max-h-12.overflow-y-auto.text-base=post.content
+                            div.flex.flex-row
+                                div.text-xs.text-gray-500=post.user.nickname || post.user.email
+                                div.pl-2.text-xs.text-gray-500=post.editedAt || post.createdAt
+                                if post.isEdited
+                                    div.pl-2.text-xs.text-gray-500 edited
+                    div.flex.flex-row.flex-auto.min-w-max
+                        if user.id === post.userId
+                            form.fake-form(method='' action='/')
+                                button.update-form-btn.rounded.bg-gray-300.p-2.text-white 수정하기
+                            form.update-post-form.hidden(method='POST' action=`/posts/${post.id}/update`)
+                                input.overflow-hidden.update-post-input.rounded.border.border-gray-200.p-2(name='content')
+                                button.update-post-btn.rounded.bg-gray-300.p-2.text-white.ml-2 올리기
+                            form(method='POST' action=`/posts/${post.id}/delete`)
+                                button.rounded.bg-gray-300.p-2.text-white.ml-2 삭제
+
+        

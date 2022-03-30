@@ -7,9 +7,14 @@
     const div = document.createElement('div')
     div.className = `absolute flex top-4 left-4 right-4 rounded text-base text-white items-center justify-center pointer-cursor text-center p-4 ${className}`
     div.innerText = message
+    const timeoutId = setTimeout(() => {
+      document.body.removeChild(div)
+    }, 2000)
     div.addEventListener('click', () => {
       document.body.removeChild(div)
+      clearTimeout(timeoutId)
     })
+
     document.body.appendChild(div)
   }
 
